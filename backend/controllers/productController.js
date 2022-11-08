@@ -20,13 +20,13 @@ const getProductById = asyncHandler(async (req, res) => {
         res.json(product)
     } else {
         res.status(404)
-        throw new Error('Product Not Found')
+        throw new Error('Product Not Found, Make sure you enter correct productId')
     }
 })
 
 // @desc Add product
 // @route POST /api/product
-// @access Public
+// @access AdminOnly
 const addProduct = asyncHandler(async (req, res) => {
     const _user = await User.findById(req.user._id)
     if (_user && _user.isAdmin) {
@@ -36,17 +36,16 @@ const addProduct = asyncHandler(async (req, res) => {
         res.json({ msg: "Product Added Successfully", val: return_res })
     }
     else
-        res.json({ msg: "Product Failed To Add", val: return_res })
+        res.json({ msg: "Failed To Add Product, Make sure you enter correct productId", val: return_res })
 })
 
 // @desc Update product
 // @route POST /api/product
-// @access Public
+// @access AdminOnly
 const updateProduct = asyncHandler(async (req, res) => {
     const _user = await User.findById(req.user._id)
-    const _product_id = await Product.findById(req.params.id)
-    if (_user && _user.isAdmin) {
-        const _product = await Product.findById(_product_id)
+    var _product = await Product.findById(req.params.id)
+    if (_user && _user.isAdmin && _product) {
         _product.name = req.body.name || _product.name
         _product.image = req.body.image || _product.image
         _product.description = req.body.description || _product.description
@@ -61,6 +60,22 @@ const updateProduct = asyncHandler(async (req, res) => {
         res.json({ msg: "Product Updated Successfully", val: return_res })
     }
     else
-        res.json({ msg: "Product Failed To Update", val: return_res })
+        res.json({ msg: "Failed To Update Product, Make sure you enter correct productId", val: return_res })
 })
-export { getProducts, getProductById, addProduct, updateProduct}
+
+// @desc Delete product
+// @route Delete /api/product
+// @access AdminOnly
+const deleteProduct = asyncHandler(async (req, res) => {
+    const _user = await User.findById(req.user._id)
+    const _product = await Product.findById(req.params.id)
+    if (_user && _user.isAdmin && _product) {
+        var return_res = await _product.delete();
+
+        res.json({ msg: "Product Deleted Successfully", val: return_res })
+    }
+    else
+        res.json({ msg: "Failed To Deleted Product, Make sure you enter correct productId", val: return_res })
+})
+
+export { getProducts, getProductById, addProduct, updateProduct, deleteProduct}

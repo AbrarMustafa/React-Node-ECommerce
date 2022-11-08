@@ -22,13 +22,17 @@ const reviewSchema = mongoose.Schema(
 
 const productSchema = mongoose.Schema(
     {
-        // ref is used to add relationship between the User and Product
+        // ref is used to add relationship between the Product and User
         user: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: 'User',
         },
-        name: {
+        title: {
+            type: String,
+            required: true,
+        },
+        description: {
             type: String,
             required: true,
         },
@@ -39,14 +43,12 @@ const productSchema = mongoose.Schema(
         brand: {
             type: String,
             required: true,
-        },
+        }, 
+        // ref is used to add relationship between the Category and User
         category: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
             required: true,
-        },
-        description: {
-            type: String,
-            required: true,
+            ref: 'Categroy',
         },
         // Reviews attribute holds an array of reviews which are of the schema type 'reviewSchema'
         reviews: [reviewSchema],

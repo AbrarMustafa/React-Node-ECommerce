@@ -8,9 +8,11 @@ import colors from 'colors'
 // Users and product data
 import users from './data/users.js'
 import products from './data/products.js'
+import categories from './data/categories.js'
 
 // Mongoose models
 import Product from './models/productModel.js'
+import Category from './models/categoryModel.js'
 import Order from './models/orderModel.js'
 import User from './models/userModel.js'
 
@@ -27,19 +29,19 @@ const importData = async () => {
         await Product.deleteMany() // Delete every product
         await User.deleteMany() // Delete every user
 
-        // Array of created users
+        // -----------------------------------------users-------------------------------------------------//
         const createdUsers = await User.insertMany(users)
-
-        // Get admin user from array
         const adminUser = createdUsers[0].id
 
-        // Get products with the admin user set
-        const sampleProducts = products.map((product) => {
-            return { ...product, user: adminUser }
-        })
+        // ----------------------------------------categories--------------------------------------------------//
+        const createdCategories = await Category.insertMany(categories)
 
-        // Insert all product data with admin user
+        // ----------------------------------------products--------------------------------------------------//
+        const sampleProducts = products.map((product) => {
+            return { ...product, user: adminUser, category: createdCategories[0].id}
+        })
         await Product.insertMany(sampleProducts)
+
 
         console.log('Data Imported!'.green.inverse)
         process.exit()
