@@ -3,25 +3,14 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 // Reducers
-import {
-    productListReducer,
-    productDetailsReducer,
-} from './reducers/productReducers'
-import { cartReducer } from './reducers/cartReducers'
-import {
-    userLoginReducer,
-    userRegisterReducer,
-    userDetailsReducer,
-    userUpdateProfileReducer,
-} from './reducers/userReducers'
-import {
-    createOrderReducer,
-    orderDetailsReducer,
-    orderListUserReducer,
-    orderPayReducer,
-} from './reducers/orderReducers'
+import {categoryListReducer, } from './trigger/categoryReducers'
+import {productListReducer, productDetailsReducer, } from './trigger/productReducers'
+import {cartReducer } from './trigger/cartReducers'
+import {userLoginReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer, } from './trigger/userReducers'
+import {createOrderReducer, orderDetailsReducer, orderListUserReducer, orderPayReducer, } from './trigger/orderReducers'
 
 const reducer = combineReducers({
+    categoryList: categoryListReducer,
     productList: productListReducer,
     productDetails: productDetailsReducer,
     cart: cartReducer,

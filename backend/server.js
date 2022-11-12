@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import connectDB from './config/db.js'
 import colors from 'colors'
 import productRoutes from './routes/productRoutes.js'
+import categoryRoutes from './routes/categoryRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
@@ -24,6 +25,8 @@ app.get('/', (req, res) => {
 
 // Product routes
 app.use('/api/products', productRoutes)
+// Category routes
+app.use('/api/categories', categoryRoutes)
 // User routes
 app.use('/api/users', userRoutes)
 // Order routes

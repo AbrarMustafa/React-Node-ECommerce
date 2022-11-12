@@ -23,6 +23,14 @@ const categories = [
         title: 'Amazon Echo Dot 3rd Generation',
         image: '/images/alexa.jpg',
     },
+    {
+        title: 'T-Cat',
+        image: '/images/mouse.jpg',
+    },
+    {
+        title: 'Amazon Cat',
+        image: '/images/alexa.jpg',
+    },
 ]
 
 export default categories
